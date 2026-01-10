@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_empat_main/Project2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,15 +8,14 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Empat'),
     );
   }
 }
@@ -28,14 +28,32 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class Person {
+  // Private fields
+  String _firstName;
+  String _lastName;
+  String _whoEdited;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  // Constructor
+  Person({required String firstName, required String lastName, String whoEdited = ''}) : 
+    _firstName = firstName, 
+    _lastName = lastName,
+    _whoEdited = whoEdited;
+  
+  // Getters
+  String get fullName => '$_firstName $_lastName';
+  String get whoEdited => _whoEdited;
+
+  // Setters
+  set whoEdited(String editor) {
+    _whoEdited = editor;
   }
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  // Named parameter
+  final Person _author = Person(firstName: 'Ihor', lastName: 'Syniaiev');
+  final TextEditingController _whoEdited = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,21 +64,48 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: .center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Padding(padding: const EdgeInsets.symmetric(vertical: 20),
+            child: const Text('Hi, this is the main page for navigation between projects.'),
             ),
+            Text('This project was created by ${_author.fullName}.'),
+            TextField(
+              controller: _whoEdited,
+              decoration: const InputDecoration(
+                labelText: 'Enter your name if you edited this file',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _author.whoEdited = _whoEdited.text;
+                });
+              },
+              child: const Text('Submit'),
+            ),
+            Text('Last edited by: ${_author.whoEdited}'),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Project2(title: 'Project 2'),
+                ),
+              );
+            },
+            tooltip: 'Go to Project 2',
+            child: const Icon(Icons.arrow_forward), // must be project title
+          ),
+        ],
+      )
     );
   }
 }
