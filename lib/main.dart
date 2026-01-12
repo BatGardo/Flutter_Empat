@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_empat_main/Project2.dart';
+import 'package:flutter_empat_main/Project3.dart';
 
 void main() {
   runApp(const MyApp());
@@ -88,24 +89,42 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          const SizedBox(height: 10),
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Project2(title: 'Project 2'),
-                ),
-              );
-            },
-            tooltip: 'Go to Project 2',
-            child: const Icon(Icons.arrow_forward), // must be project title
-          ),
-        ],
-      )
+      floatingActionButton: Center( 
+        child: Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          direction: Axis.horizontal,
+          children: [
+            const SizedBox(height: 10),
+            FloatingActionButton.extended(
+            heroTag: 'project2',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Project2(title: 'Project 2'),
+                  ),
+                );
+              },
+              label: const Text('Project 2'),
+              icon: const Icon(Icons.arrow_forward),
+            ),
+            FloatingActionButton.extended(
+            heroTag: 'project3',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Project3(title: 'Project 3'),
+                  ),
+                );
+              },
+              label: const Text('Project 3'),
+              icon: const Icon(Icons.arrow_forward),
+            ),
+          ],
+        )
+      ),
     );
   }
 }
