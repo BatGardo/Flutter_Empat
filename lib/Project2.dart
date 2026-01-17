@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_empat_main/models/Project2classes.dart';
 
 class Project2 extends StatefulWidget {
   const Project2({super.key, required this.title});
@@ -9,6 +10,29 @@ class Project2 extends StatefulWidget {
 }
 
 class _Project2State extends State<Project2> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  // Helper for Task 1
+  final NullableString nullableString = NullableString();
+
+
+  // Helper variable for Task 3
+  String task3Output = ''; // Temporary storage for Task 3 output
+
+  // Helper for Task 4
+  var fabricatorWithValue = Fabricator.create('Preffered Name Factored');
+  var fabricatorEmpty = Fabricator.create('');
+  var initializator = Initializator('Preffered Name Initialized', 23);
+
+  // Helper for Task 7
+  final Task7Helper task7Helper = Task7Helper();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,14 +40,241 @@ class _Project2State extends State<Project2> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Welcome to Project 2!'),
-          ],
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Text('Welcome to Project 2!'),
+
+              withSpacing(buildTask1()),
+              withSpacing(buildTask2()),
+              withSpacing(buildTask3()),
+              withSpacing(buildTask4()),
+              withSpacing(buildTask5()),
+              withSpacing(buildTask6()),
+              withSpacing(buildTask7()),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  // Helper method to add spacing between Tasks
+  Widget withSpacing(Widget child) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: child,
+    );
+  }
+
+  // Zone for Tasks
+  Widget buildTask1() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text('Task 1'),
+        // Grouped buttons
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Set to Non-Null button
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  nullableString.forTask1 ??=
+                      "Wow, this is not null, button did that?";
+                });
+              },
+              child: const Text('Set to Non-Null'),
+            ),
+            // Set to Null button
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  nullableString.forTask1 = null;
+                });
+              },
+              child: const Text('Set to Null'),
+            ),
+          ],
+        ),
+        Text(nullableString.forTask1 ?? 'Hmmm, i think it is null...'),
+      ],
+    );
+  }
+
+  Widget buildTask2() {
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text('Task 2'),
+        TextField(
+          decoration: const InputDecoration(labelText: 'Enter something here'),
+          // calling a closure
+          onChanged: (value) => updateInput(value, setState),
+        ),
+        // Displaying the input and status after closure call
+        Text('You entered: $task2Input'),
+        Text('Status: $task2Status'),
+      ],
+    );
+  }
+
+  Widget buildTask3() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text('Task 3'),
+        // Displaying default function output
+        Text(
+          'That`s how we see that by default: "${performTask3()}" press the button to see custom input.',
+        ),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              task3Output = 'Button Pressed';
+            });
+          },
+          // Displaying function output with custom input
+          // using a conditional expression to check if button was pressed
+          child: Text(
+            task3Output.isEmpty
+                ? 'That`s default too, but: ${performTask3()}'
+                : performTask3(task3Input: "But that's not default!"),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTask4() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text('Task 4'),
+        Text('${fabricatorEmpty.name}, ${fabricatorEmpty.age}'),
+        TextField(
+          decoration: const InputDecoration(
+            labelText: 'Enter name for Fabricator',
+          ),
+          onChanged: (value) {
+            setState(() {
+              fabricatorWithValue = Fabricator.create(value);
+            });
+          },
+        ),
+        Text('${fabricatorWithValue.name}, ${fabricatorWithValue.age}'),
+        TextField(
+          decoration: const InputDecoration(
+            labelText: 'Enter name for Initializator',
+          ),
+          onChanged: (value) {
+            setState(() {
+              initializator = Initializator(
+                value.isEmpty ? 'Who i am' : value,
+                18,
+              );
+            });
+          },
+        ),
+        Text(initializator.phrase),
+      ],
+    );
+  }
+
+  Widget buildTask5() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [const Text('Task 5'), Text(Task5Helper().task5Output)],
+    );
+  }
+
+  Widget buildTask6() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text('Task 6'),
+        TextField(
+          decoration: const InputDecoration(
+            labelText: 'Enter a non-negative integer',
+          ),
+          keyboardType: TextInputType.number,
+          onSubmitted: (value) {
+            setState(() {
+              try {
+                int intValue = int.parse(value);
+                Assertedint assertedInt = Assertedint(intValue);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'You entered a valid non-negative integer: ${assertedInt.value}',
+                    ),
+                  ),
+                );
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Error: ${e.toString()}')),
+                );
+              }
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget buildTask7() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text('Task 7'),
+        TextField(
+          decoration: const InputDecoration(labelText: 'Write item'),
+          keyboardType: TextInputType.text,
+          onSubmitted: (value) => setState(() {
+            task7Helper.items.add(value);
+          }),
+        ),
+        Text('List Items: ${task7Helper.items.join(', ')}'),
+        TextField(
+          decoration: const InputDecoration(labelText: 'Write unique item'),
+          keyboardType: TextInputType.text,
+          onSubmitted: (value) => setState(() {
+            task7Helper.selectedItems.add(value);
+          }),
+        ),
+        Text('Set Items: ${task7Helper.selectedItems.join(', ')}'),
+        TextField(
+          decoration: const InputDecoration(labelText: 'Write item to count'),
+          keyboardType: TextInputType.text,
+          onSubmitted: (value) => setState(() {
+            if (value.isNotEmpty) {
+              // Check if the value starts with "-"
+              bool isDecrement = value.startsWith('-');
+              String key = isDecrement ? value.substring(1) : value;
+              if (task7Helper.itemCounts.containsKey(key)) {
+                // Increment or decrement the count
+                task7Helper.itemCounts[key] =
+                    task7Helper.itemCounts[key]! + (isDecrement ? -1 : 1);
+                // If the value became <= 0, remove the key
+                if (task7Helper.itemCounts[key]! <= 0) {
+                  task7Helper.itemCounts.remove(key);
+                }
+              } else if (!isDecrement) {
+                // Add a new object only if it's +1
+                task7Helper.itemCounts[key] = 1;
+              }
+            }
+          }),
+        ),
+        Text(
+          'Map Items: ${task7Helper.itemCounts.entries.map((entry) => '${entry.key}: ${entry.value}').join(', ')}',
+        ),
+      ],
     );
   }
 }
