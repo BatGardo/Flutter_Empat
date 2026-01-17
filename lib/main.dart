@@ -36,11 +36,14 @@ class Person {
   String _whoEdited;
 
   // Constructor
-  Person({required String firstName, required String lastName, String whoEdited = ''}) : 
-    _firstName = firstName, 
-    _lastName = lastName,
-    _whoEdited = whoEdited;
-  
+  Person({
+    required String firstName,
+    required String lastName,
+    String whoEdited = '',
+  }) : _firstName = firstName,
+       _lastName = lastName,
+       _whoEdited = whoEdited;
+
   // Getters
   String get fullName => '$_firstName $_lastName';
   String get whoEdited => _whoEdited;
@@ -54,7 +57,13 @@ class Person {
 class _MyHomePageState extends State<MyHomePage> {
   // Named parameter
   final Person _author = Person(firstName: 'Ihor', lastName: 'Syniaiev');
-  final TextEditingController _whoEdited = TextEditingController();
+  final TextEditingController _whoEditedController = TextEditingController();
+
+  @override
+  void dispose() {
+    _whoEditedController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(padding: const EdgeInsets.symmetric(vertical: 20),
-            child: const Text('Hi, this is the main page for navigation between projects.'),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: const Text(
+                'Hi, this is the main page for navigation between projects.',
+              ),
             ),
             Text('This project was created by ${_author.fullName}.'),
             TextField(
-              controller: _whoEdited,
+              controller: _whoEditedController,
               decoration: const InputDecoration(
                 labelText: 'Enter your name if you edited this file',
               ),
@@ -80,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  _author.whoEdited = _whoEdited.text;
+                  _author.whoEdited = _whoEditedController.text;
                 });
               },
               child: const Text('Submit'),
@@ -90,17 +102,17 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       // Buttons for navigation
-      floatingActionButton: Center( 
+      floatingActionButton: Center(
         child: Wrap(
           spacing: 10,
           runSpacing: 10,
           direction: Axis.horizontal,
           children: [
-          const SizedBox(height: 10),
+            const SizedBox(height: 10),
             FloatingActionButton.extended(
-            heroTag: 'project2',
+              heroTag: 'project2',
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const Project2(title: 'Project 2'),
@@ -111,9 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.arrow_forward),
             ),
             FloatingActionButton.extended(
-            heroTag: 'project3',
+              heroTag: 'project3',
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const Project3(title: 'Project 3'),
@@ -124,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.arrow_forward),
             ),
           ],
-        )
+        ),
       ),
     );
   }
