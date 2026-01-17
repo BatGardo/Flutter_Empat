@@ -89,13 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      // Buttons for navigation
       floatingActionButton: Center( 
         child: Wrap(
           spacing: 10,
           runSpacing: 10,
           direction: Axis.horizontal,
           children: [
-            const SizedBox(height: 10),
+          const SizedBox(height: 10),
             FloatingActionButton.extended(
             heroTag: 'project2',
               onPressed: () {
