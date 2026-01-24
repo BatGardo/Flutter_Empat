@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_empat_main/Project2.dart';
 import 'package:flutter_empat_main/Project3.dart';
+import 'package:flutter_empat_main/Project4.dart';
 
 void main() {
   runApp(const MyApp());
@@ -133,6 +134,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               label: const Text('Project 3'),
+              icon: const Icon(Icons.arrow_forward),
+            ),
+            FloatingActionButton.extended(
+              heroTag: 'project4',
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Project4(title: 'Project 4'),
+                  ),
+                );
+              },
+              label: const Text('Project 4'),
               icon: const Icon(Icons.arrow_forward),
             ),
           ],
