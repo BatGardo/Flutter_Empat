@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+//1) Побудувати ієрархію віджетів. А саме: Container, Column, Row, Expanded
+//2) Продемонструвати стилізацію віджетів. А саме: колір, розмір, тінь, бекграунд
+//3) Побудувати коректне розміщення віджетів за допомогою crossAxisAlignment, mainAxisAlignment
+//4) На основі зазначених вище завдань створити імітацію верстки популярного мобільного додатку (наприклад: фейсбук, інстаграм, твіттер і т.д.)
 class Project3 extends StatefulWidget {
   const Project3({super.key, required this.title});
   final String title;
@@ -32,40 +36,38 @@ class _Project3State extends State<Project3> {
                 alignment: Alignment.topCenter,
                 // Channels List
                 child: Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        buildMessagesBlock(),
-                        buildChannelBox(
-                          imageURL:
-                              'https://i.pinimg.com/1200x/d0/33/b3/d033b35238b7c9f1b1bfbc16338f9995.jpg',
-                          text: 'CH1',
-                        ),
-                        buildChannelBox(
-                          imageURL:
-                              'https://www.make.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fun655fb9wln6%2FappIcon-discord%2Fb4015a36e7cc3d7c65f221118342f416%2Fdiscord.png&w=3840&q=75',
-                          text: 'CH2',
-                        ),
-                        buildChannelBox(text: 'Channel 3'),
-                        buildChannelBox(
-                          imageURL:
-                              'https://i.pinimg.com/736x/37/a4/bf/37a4bf61e3ff8724cbd0516713c76cdf.jpg',
-                          text: 'CH4',
-                        ),
-                        buildChannelBox(
-                          imageURL:
-                              'https://i.pinimg.com/736x/23/fe/1b/23fe1bb4769da1bbe6cb8cc85a310f48.jpg',
-                          text: 'CH5',
-                        ),
-                        buildChannelBox(text: 'CH6'),
-                        buildChannelBox(text: 'CH7'),
-                        buildChannelBox(text: 'CH8'),
-                        buildChannelBox(text: 'CH9'),
-                        buildChannelBox(text: 'CH10'),
-                        buildChannelBox(text: 'CH11'),
-                        buildChannelBox(text: 'CH12'),
-                      ],
-                    ),
+                  child: ListView(
+                    children: [
+                      buildMessagesBlock(),
+                      buildChannelBox(
+                        imageURL:
+                            'https://i.pinimg.com/1200x/d0/33/b3/d033b35238b7c9f1b1bfbc16338f9995.jpg',
+                        text: 'CH1',
+                      ),
+                      buildChannelBox(
+                        imageURL:
+                            'https://www.make.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fun655fb9wln6%2FappIcon-discord%2Fb4015a36e7cc3d7c65f221118342f416%2Fdiscord.png&w=3840&q=75',
+                        text: 'CH2',
+                      ),
+                      buildChannelBox(text: 'Channel 3'),
+                      buildChannelBox(
+                        imageURL:
+                            'https://i.pinimg.com/736x/37/a4/bf/37a4bf61e3ff8724cbd0516713c76cdf.jpg',
+                        text: 'CH4',
+                      ),
+                      buildChannelBox(
+                        imageURL:
+                            'https://i.pinimg.com/736x/23/fe/1b/23fe1bb4769da1bbe6cb8cc85a310f48.jpg',
+                        text: 'Saint Six',
+                      ),
+                      buildChannelBox(text: 'CH6'),
+                      buildChannelBox(text: 'CH7'),
+                      buildChannelBox(text: 'CH8'),
+                      buildChannelBox(text: 'CH9'),
+                      buildChannelBox(text: 'CH10'),
+                      buildChannelBox(text: 'CH11'),
+                      buildChannelBox(text: 'CH12'),
+                    ],
                   ),
                 ),
               ),
@@ -125,69 +127,67 @@ class _Project3State extends State<Project3> {
                         //const SizedBox(height: 10),
                         // Users List
                         Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                buildUsersBox(
-                                  imageUrl:
-                                      'https://i.pinimg.com/736x/98/ab/63/98ab63e0f8a70f44d8071a0a0803f706.jpg',
-                                  topText: 'User A',
-                                  bottomText: 'Call ended',
-                                  lastActivity: '5m',
-                                  status: 'Online',
-                                ),
-                                buildUsersBox(
-                                  imageUrl:
-                                      'https://i.pinimg.com/1200x/f2/7a/34/f27a34384238e446eccc00baa5ceda9a.jpg',
-                                  topText: 'User B',
-                                  bottomText:
-                                      'You: Hey, D want primogems again...',
-                                  color: const Color.fromARGB(255, 30, 31, 36),
-                                  lastActivity: '2d',
-                                ),
-                                buildUsersBox(
-                                  topText: 'User C',
-                                  bottomText: 'User C: Where`s my avatar?',
-                                  lastActivity: '10h',
-                                  status: 'Online',
-                                ),
-                                buildUsersBox(
-                                  imageUrl:
-                                      'https://i.pinimg.com/1200x/b0/25/ed/b025ed9dc74e7ed7b3c9a7f7b69ebe47.jpg',
-                                  topText: 'User D',
-                                  bottomText: 'User D: PRIMOGEEEEEEEMS',
-                                  lastActivity: '3w',
-                                  status: 'Online',
-                                ),
-                                buildUsersBox(
-                                  topText: 'User E',
-                                  bottomText: 'Call ended',
-                                  lastActivity: '3w',
-                                  status: 'Online',
-                                ),
-                                buildUsersBox(
-                                  topText: 'User F',
-                                  bottomText: 'Call missed',
-                                  lastActivity: '1mo',
-                                ),
-                                buildUsersBox(
-                                  topText: 'User G',
-                                  bottomText: 'Call ended',
-                                  lastActivity: '2mo',
-                                  status: 'Online',
-                                ),
-                                buildUsersBox(
-                                  topText: 'User H',
-                                  bottomText: 'You: Busy, not now',
-                                  lastActivity: '2mo',
-                                ),
-                                buildUsersBox(
-                                  topText: 'User I',
-                                  bottomText: 'User I: You saw me?',
-                                  lastActivity: '6mo',
-                                ),
-                              ],
-                            ),
+                          child: ListView(
+                            children: [
+                              buildUsersBox(
+                                imageUrl:
+                                    'https://i.pinimg.com/736x/98/ab/63/98ab63e0f8a70f44d8071a0a0803f706.jpg',
+                                topText: 'User A',
+                                bottomText: 'Call ended',
+                                lastActivity: '5m',
+                                status: 'Online',
+                              ),
+                              buildUsersBox(
+                                imageUrl:
+                                    'https://i.pinimg.com/1200x/f2/7a/34/f27a34384238e446eccc00baa5ceda9a.jpg',
+                                topText: 'User B',
+                                bottomText:
+                                    'You: Hey, D want primogems again...',
+                                color: const Color.fromARGB(255, 30, 31, 36),
+                                lastActivity: '2d',
+                              ),
+                              buildUsersBox(
+                                topText: 'User C',
+                                bottomText: 'User C: Where`s my avatar?',
+                                lastActivity: '10h',
+                                status: 'Online',
+                              ),
+                              buildUsersBox(
+                                imageUrl:
+                                    'https://i.pinimg.com/1200x/b0/25/ed/b025ed9dc74e7ed7b3c9a7f7b69ebe47.jpg',
+                                topText: 'User D',
+                                bottomText: 'User D: PRIMOGEEEEEEEMS',
+                                lastActivity: '3w',
+                                status: 'Online',
+                              ),
+                              buildUsersBox(
+                                topText: 'User E',
+                                bottomText: 'Call ended',
+                                lastActivity: '3w',
+                                status: 'Online',
+                              ),
+                              buildUsersBox(
+                                topText: 'User F',
+                                bottomText: 'Call missed',
+                                lastActivity: '1mo',
+                              ),
+                              buildUsersBox(
+                                topText: 'User G',
+                                bottomText: 'Call ended',
+                                lastActivity: '2mo',
+                                status: 'Online',
+                              ),
+                              buildUsersBox(
+                                topText: 'User H',
+                                bottomText: 'You: Busy, not now',
+                                lastActivity: '2mo',
+                              ),
+                              buildUsersBox(
+                                topText: 'User I',
+                                bottomText: 'User I: You saw me?',
+                                lastActivity: '6mo',
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -338,7 +338,14 @@ class _Project3State extends State<Project3> {
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(8.0),
-            onTap: () {},
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('You tapped a channel $text'),
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            },
             child: Container(
               decoration: BoxDecoration(
                 color: color,
@@ -384,7 +391,14 @@ class _Project3State extends State<Project3> {
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(12.0),
-            onTap: () {},
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('You tapped a user $topText'),
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            },
             child: Container(
               decoration: BoxDecoration(
                 color: color,
