@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_empat_main/Project4.dart';
+import 'package:flutter_empat_main/Project5.dart';
 
-// Drawer Widget
 Widget buildDrawer() {
   return Drawer(
     backgroundColor: const Color.fromARGB(255, 20, 20, 20),
@@ -47,7 +46,6 @@ Widget buildDrawer() {
   );
 }
 
-// Channel List Grouped
 Widget buildChannelBoxGrouped(BuildContext context) {
   return Column(
     children: [
@@ -87,7 +85,6 @@ Widget buildChannelBoxGrouped(BuildContext context) {
   );
 }
 
-// Activity List Grouped
 Widget activityBoxGrouped(BuildContext context) {
   return Row(
     children: [
@@ -115,7 +112,11 @@ Widget activityBoxGrouped(BuildContext context) {
 }
 
 // Users List Grouped
-Widget userBoxGrouped(BuildContext context) {
+Widget userBoxGrouped(
+  BuildContext context,
+  String? activeUserID,
+  void Function(String id, String name) onUserTap,
+) {
   return Column(
     children: [
       buildUsersBox(
@@ -127,6 +128,8 @@ Widget userBoxGrouped(BuildContext context) {
         bottomText: 'Call ended',
         lastActivity: '5m',
         status: 'Online',
+        isActive: activeUserID == 'user_a',
+        onTap: onUserTap,
       ),
       buildUsersBox(
         context: context,
@@ -135,8 +138,9 @@ Widget userBoxGrouped(BuildContext context) {
             'https://i.pinimg.com/1200x/f2/7a/34/f27a34384238e446eccc00baa5ceda9a.jpg',
         topText: 'User B',
         bottomText: 'You: Hey, D want primogems again...',
-        color: const Color.fromARGB(255, 30, 31, 36),
         lastActivity: '2d',
+        isActive: activeUserID == 'user_b',
+        onTap: onUserTap,
       ),
       buildUsersBox(
         context: context,
@@ -145,6 +149,8 @@ Widget userBoxGrouped(BuildContext context) {
         bottomText: 'User C: Where`s my avatar?',
         lastActivity: '10h',
         status: 'Online',
+        isActive: activeUserID == 'user_c',
+        onTap: onUserTap,
       ),
       buildUsersBox(
         context: context,
@@ -155,6 +161,8 @@ Widget userBoxGrouped(BuildContext context) {
         bottomText: 'User D: PRIMOGEEEEEEEMS',
         lastActivity: '3w',
         status: 'Online',
+        isActive: activeUserID == 'user_d',
+        onTap: onUserTap,
       ),
       buildUsersBox(
         context: context,
@@ -163,6 +171,8 @@ Widget userBoxGrouped(BuildContext context) {
         bottomText: 'Call ended',
         lastActivity: '3w',
         status: 'Online',
+        isActive: activeUserID == 'user_e',
+        onTap: onUserTap,
       ),
       buildUsersBox(
         context: context,
@@ -170,6 +180,8 @@ Widget userBoxGrouped(BuildContext context) {
         topText: 'User F',
         bottomText: 'Call missed',
         lastActivity: '1mo',
+        isActive: activeUserID == 'user_f',
+        onTap: onUserTap,
       ),
       buildUsersBox(
         context: context,
@@ -178,6 +190,8 @@ Widget userBoxGrouped(BuildContext context) {
         bottomText: 'Call ended',
         lastActivity: '2mo',
         status: 'Online',
+        isActive: activeUserID == 'user_g',
+        onTap: onUserTap,
       ),
       buildUsersBox(
         context: context,
@@ -185,6 +199,8 @@ Widget userBoxGrouped(BuildContext context) {
         topText: 'User H',
         bottomText: 'You: Busy, not now',
         lastActivity: '2mo',
+        isActive: activeUserID == 'user_h',
+        onTap: onUserTap,
       ),
       buildUsersBox(
         context: context,
@@ -192,6 +208,8 @@ Widget userBoxGrouped(BuildContext context) {
         topText: 'User I',
         bottomText: 'User I: You saw me?',
         lastActivity: '6mo',
+        isActive: activeUserID == 'user_i',
+        onTap: onUserTap,
       ),
     ],
   );
@@ -293,13 +311,14 @@ Widget buildUsersBox({
   Color color = const Color.fromARGB(255, 20, 20, 20),
   required String lastActivity,
   String status = 'Offline',
+  required bool isActive,
+  required void Function(String id, String name) onTap,
 }) {
   return SizedBox(
     height: 80,
     width: double.infinity,
     child: Padding(
       padding: const EdgeInsets.all(1.0),
-      // Material and InkWell for button effect
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -307,6 +326,7 @@ Widget buildUsersBox({
           splashColor: Colors.grey,
           highlightColor: Colors.black,
           onTap: () {
+            onTap(user_id, topText);
             Navigator.of(context).push(
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
@@ -317,7 +337,6 @@ Widget buildUsersBox({
                     ),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
-                      // Slide from right
                       const begin = Offset(1.0, 0.0);
                       const end = Offset.zero;
                       final tween = Tween(
@@ -336,14 +355,16 @@ Widget buildUsersBox({
 
           child: Container(
             decoration: BoxDecoration(
-              color: color,
+              // Color logic
+              color: isActive
+                  ? const Color.fromARGB(255, 30, 31, 36)
+                  : Colors.transparent,
               borderRadius: BorderRadius.circular(12.0),
             ),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Row(
                 children: [
-                  // Avatar with status indicator left side
                   Stack(
                     children: [
                       Hero(
@@ -354,7 +375,6 @@ Widget buildUsersBox({
                           backgroundColor: Colors.transparent,
                         ),
                       ),
-                      // Status indicator
                       Positioned(
                         bottom: 0,
                         right: 0,
@@ -374,14 +394,12 @@ Widget buildUsersBox({
                   ),
 
                   const SizedBox(width: 12),
-                  // Texts and last activity Right side
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          //Texts Column
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -405,19 +423,13 @@ Widget buildUsersBox({
                                 softWrap: false,
                                 style: const TextStyle(
                                   fontSize: 14,
-                                  color: const Color.fromARGB(
-                                    255,
-                                    140,
-                                    145,
-                                    152,
-                                  ),
+                                  color: Color.fromARGB(255, 140, 145, 152),
                                 ),
                               ),
                             ],
                           ),
                         ),
                         const SizedBox(height: 6),
-                        // Last activity Text
                         Text(
                           lastActivity,
                           style: TextStyle(
