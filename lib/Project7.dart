@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Project6 extends StatefulWidget {
-  const Project6({super.key, required this.title});
+class Project7 extends StatefulWidget {
+  const Project7({super.key, required this.title});
   final String title;
 
   @override
-  State<Project6> createState() => _Project6State();
+  State<Project7> createState() => _Project7State();
 }
 
-class _Project6State extends State<Project6> {
+class _Project7State extends State<Project7> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class _Project6State extends State<Project6> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Welcome to Project 3!'),
+            const Text('Welcome to Project 7!'),
           ],
         ),
       ),
