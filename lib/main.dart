@@ -3,7 +3,8 @@ import 'package:flutter_empat_main/Project2.dart';
 import 'package:flutter_empat_main/Project3.dart';
 import 'package:flutter_empat_main/Project4.dart';
 import 'package:flutter_empat_main/Project5.dart';
-import 'package:flutter_empat_main/Project6.dart';
+import 'package:flutter_empat_main/screens/Project6screen.dart';
+import 'package:flutter_empat_main/Project7.dart';
 
 void main() {
   runApp(const MyApp());
@@ -170,11 +171,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Project6(title: 'Project 6'),
+                    builder: (context) => Project6Screen(title: 'Project 6'),
                   ),
                 );
               },
               label: const Text('Project 6'),
+              icon: const Icon(Icons.arrow_forward),
+            ),
+            FloatingActionButton.extended(
+              heroTag: 'project7',
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Project7(title: 'Project 7'),
+                  ),
+                );
+              },
+              label: const Text('Project 7'),
               icon: const Icon(Icons.arrow_forward),
             ),
           ],
