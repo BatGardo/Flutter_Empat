@@ -3,11 +3,18 @@ import 'package:flutter_empat_main/Project2.dart';
 import 'package:flutter_empat_main/Project3.dart';
 import 'package:flutter_empat_main/Project4.dart';
 import 'package:flutter_empat_main/Project5.dart';
+import 'package:flutter_empat_main/models/Project7/Project7mod.dart';
 import 'package:flutter_empat_main/screens/Project6screen.dart';
-import 'package:flutter_empat_main/Project7.dart';
+import 'package:flutter_empat_main/screens/Project7screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => Project7Model(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,12 +22,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Empat'),
+    return Consumer<Project7Model>(
+      builder: (context, model, _) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+            useMaterial3: true,
+          ),
+          darkTheme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blue,
+              brightness: Brightness.dark,
+            ),
+            useMaterial3: true,
+          ),
+          // Theme changer
+          themeMode: model.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        );
+      },
     );
   }
 }
@@ -184,7 +205,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Project7(title: 'Project 7'),
+                    builder: (context) =>
+                        const Project7Screen(title: 'Project 7'),
                   ),
                 );
               },
