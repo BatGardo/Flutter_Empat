@@ -4,9 +4,11 @@ import 'package:flutter_empat_main/Project3.dart';
 import 'package:flutter_empat_main/Project4.dart';
 import 'package:flutter_empat_main/Project5.dart';
 import 'package:flutter_empat_main/models/Project7/Project7mod.dart';
+import 'package:flutter_empat_main/providers/Project9/chart_provider.dart';
 import 'package:flutter_empat_main/screens/Project6screen.dart';
 import 'package:flutter_empat_main/screens/Project7screen.dart';
 import 'package:flutter_empat_main/screens/Project8screen.dart';
+import 'package:flutter_empat_main/screens/project_9_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => const MyHomePage(title: 'Main Page'),
             '/project8': (context) => const Project8Screen(),
+            '/chart': (context) => const ChartScreen(),
           },
         );
       },
@@ -239,6 +242,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 'Last result: $lastResult',
                 style: const TextStyle(fontSize: 16),
               ),
+            ),
+            FloatingActionButton.extended(
+              heroTag: 'chart',
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => ChangeNotifierProvider(
+                      create: (_) => ChartProvider(),
+                      child: const ChartScreen(),
+                    ),
+                  ),
+                );
+
+                if (result != null) {
+                  setState(() {
+                    lastResult = result.toString();
+                  });
+                }
+              },
+              label: const Text('Chart'),
+              icon: const Icon(Icons.arrow_forward),
             ),
           ],
         ),
